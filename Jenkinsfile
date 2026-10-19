@@ -1,10 +1,12 @@
 pipeline {
     agent any
-
+    tools {
+        nodejs 'node18'  // دەبێت ئەم ناوە سەد لە سەد لەگەڵ ئەوەی سەرەوە یەک بگرێت
+    }
     environment {
         APP_NAME          = 'mern-ecommerce'
         IMAGE_TAG         = "${BUILD_NUMBER}"
-        REGISTRY          = "your-dockerhub-or-nexus-url" // یان AWS ECR / Nexus Registry
+        REGISTRY          = "your-dockerhub-or-nexus-url" 
         SONAR_HOST_URL    = "http://localhost:9000"
     }
 
