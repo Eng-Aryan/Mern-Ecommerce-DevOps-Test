@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'node18'  // دەبێت ئەم ناوە سەد لە سەد لەگەڵ ئەوەی سەرەوە یەک بگرێت
+        nodejs 'node18' 
     }
     environment {
         APP_NAME          = 'mern-ecommerce'

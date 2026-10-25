@@ -4,3 +4,7 @@ dist
 server/uploads/*
 !server/uploads/.gitkeep
 server/.seeded
+.terraform/
+*.exe
+*.tfstate
+*.tfstate.backup
