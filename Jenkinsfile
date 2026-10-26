@@ -33,9 +33,7 @@ pipeline {
                 stage('SAST (SonarQube Analysis)') {
                     steps {
                         echo 'Running SAST Security Scan...'
-                    
-                        sh 'sonar-scanner -Dsonar.login=squ_82c90a260d526a518b7acbe1231994e4123fee9e'
-                    }
+                        sh 'sonar-scanner -Dsonar.login=squ_82c90a260d526a518b7acbe1231994e4123fee9e -Dsonar.projectKey=mern-ecommerce -Dsonar.projectName="MERN Ecommerce" -Dsonar.sources=.'                    }
                 }
                 stage('Dependency & Vulnerability Scanning') {
                     steps {
