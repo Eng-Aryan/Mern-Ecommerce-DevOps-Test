@@ -7,7 +7,7 @@ pipeline {
         APP_NAME          = 'mern-ecommerce'
         IMAGE_TAG         = "${BUILD_NUMBER}"
         REGISTRY          = "your-dockerhub-or-nexus-url" 
-        SONAR_HOST_URL    = "http://host.docker.internal:9000"
+        SONAR_HOST_URL    = "http://sonarqube:9000"
     }
 
     stages {
