@@ -34,7 +34,7 @@ pipeline {
                     steps {
                         echo 'Running SAST Security Scan...'
                         // بەکارهێنانی SonarQube Scanner
-                        // sh 'sonar-scanner'
+                         sh 'sonar-scanner'
                     }
                 }
                 stage('Dependency & Vulnerability Scanning') {
