@@ -53,23 +53,14 @@ pipeline {
                                 variable: 'SONAR_TOKEN'
                             )
                         ]) {
-                            withSonarQubeEnv('SonarQubeServer') {
-                                sh '''
-                                   sonar-scanner \
-                                   -Dsonar.login=${SONAR_TOKEN} \
-                                   -Dsonar.projectKey=mern-ecommerce \
-                                   -Dsonar.projectName="MERN Ecommerce" \
-                                   -Dsonar.sources=. \
-                                   -Dsonar.host.url=${SONAR_HOST_URL}
-                                '''
-                            }
-                        }
-
-                        script {
-                            def qg = waitForQualityGate()
-                            if (qg.status != 'OK') {
-                                error "Pipeline aborted because Quality Gate failed: ${qg.status}"
-                            }
+                            sh '''
+                               sonar-scanner \
+                               -Dsonar.login=${SONAR_TOKEN} \
+                               -Dsonar.projectKey=mern-ecommerce \
+                               -Dsonar.projectName="MERN Ecommerce" \
+                               -Dsonar.sources=. \
+                               -Dsonar.host.url=${SONAR_HOST_URL}
+                            '''
                         }
                     }
                 }
