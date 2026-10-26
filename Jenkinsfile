@@ -31,9 +31,28 @@ pipeline {
                     }
                 }
                 stage('SAST (SonarQube Analysis)') {
-                    steps {
-                        echo 'Running SAST Security Scan...'
-                        sh 'sonar-scanner -Dsonar.login=squ_82c90a260d526a518b7acbe1231994e4123fee9e -Dsonar.projectKey=mern-ecommerce -Dsonar.projectName="MERN Ecommerce" -Dsonar.sources=.'                    }
+    steps {
+        echo 'Running SAST Security Scan...'
+        
+       
+        withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
+            sh '''
+                sonar-scanner \
+                -Dsonar.login=${SONAR_TOKEN} \
+                -Dsonar.projectKey=mern-ecommerce \
+                -Dsonar.projectName="MERN Ecommerce" \
+                -Dsonar.sources=. \
+                -Dsonar.javascript.lcov.reportPaths=server/coverage/lcov.info
+            '''
+        }
+        
+        script {
+            def qg = waitForQualityGate()
+            if (qg.status != 'OK') {
+                error "Pipeline aborted because Quality Gate failed: ${qg.status}"
+            }
+             
+             
                 }
                 stage('Dependency & Vulnerability Scanning') {
                     steps {
