@@ -56,11 +56,15 @@ pipeline {
                         ]) {
                             sh '''
                                 sonar-scanner \
-                                  -Dsonar.login=${SONAR_TOKEN} \
-                                  -Dsonar.projectKey=mern-ecommerce \
-                                  -Dsonar.projectName="MERN Ecommerce" \
-                                  -Dsonar.sources=. \
-                                  -Dsonar.javascript.lcov.reportPaths=server/coverage/lcov.info
+                                -Dsonar.login=${SONAR_TOKEN} \
+                                -Dsonar.projectKey=mern-ecommerce \
+                                -Dsonar.projectName="MERN Ecommerce" \
+                                -Dsonar.sources=. \
+                                -Dsonar.javascript.lcov.reportPaths=server/coverage/lcov.info \
+                                -Dsonar.pullrequest.key=${CHANGE_ID} \
+                                -Dsonar.pullrequest.branch=${BRANCH_NAME} \
+                                -Dsonar.pullrequest.base=${CHANGE_TARGET} \
+                                -Dsonar.host.url=${SONAR_HOST_URL}
                             '''
                         }
 
@@ -176,7 +180,6 @@ pipeline {
             stages {
                 stage('Manual Approval Gate') {
                     steps {
-                        // Approval before production deployment
                         input message: 'Do you approve deploying this build to production?',
                               ok: 'Deploy to Production'
                     }
