@@ -1,4 +1,3 @@
-
 pipeline {
     agent any
 
@@ -50,18 +49,20 @@ pipeline {
 
                         withCredentials([
                             string(
-                                credentialsId: 'soner-token',
+                                credentialsId: 'sonar-token',
                                 variable: 'SONAR_TOKEN'
                             )
                         ]) {
-                            sh '''
-                               sonar-scanner \
-                               -Dsonar.login=${SONAR_TOKEN} \
-                               -Dsonar.projectKey=mern-ecommerce \
-                               -Dsonar.projectName="MERN Ecommerce" \
-                               -Dsonar.sources=. \
-                               -Dsonar.host.url=${SONAR_HOST_URL}
-                            '''
+                            withSonarQubeEnv('SonarQubeServer') {
+                                sh '''
+                                   sonar-scanner \
+                                   -Dsonar.login=${SONAR_TOKEN} \
+                                   -Dsonar.projectKey=mern-ecommerce \
+                                   -Dsonar.projectName="MERN Ecommerce" \
+                                   -Dsonar.sources=. \
+                                   -Dsonar.host.url=${SONAR_HOST_URL}
+                                '''
+                            }
                         }
 
                         script {
