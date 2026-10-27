@@ -1,5 +1,7 @@
+---
 - name: Deploy MERN Stack Application
   hosts: production
+  become: yes
   tasks:
     - name: Ensure project directory exists
       ansible.builtin.file:
@@ -7,6 +9,7 @@
         state: directory
         owner: ubuntu
         group: ubuntu
+        mode: '0755'
 
     - name: Clone or pull latest code from GitHub
       ansible.builtin.git:
@@ -14,6 +17,7 @@
         dest: /home/ubuntu/mern-ecommerce
         version: main
         force: yes
+        update: yes
 
     - name: Pull and restart docker compose
       ansible.builtin.shell: |
