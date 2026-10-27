@@ -10,7 +10,7 @@
 
     - name: Clone or pull latest code from GitHub
       ansible.builtin.git:
-        repo: 'https://github.com/USERNAME/REPOSITORY.git' # لینکی ڕەپۆزیتۆرییەکەت لێرە بنووسە
+        repo: 'https://github.com/Eng-Aryan/Mern-Ecommerce-DevOps-Test.git'
         dest: /home/ubuntu/mern-ecommerce
         version: main
         force: yes
