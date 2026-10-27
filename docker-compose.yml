@@ -17,11 +17,13 @@ services:
       - mongo
 
   frontend:
-    build: ./client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      args:
+        VITE_ASSET_URL: http://16.171.230.83:5000
     ports:
       - "5173:5173"
-    environment:
-      - VITE_ASSET_URL=http://16.171.230.83:5000
     depends_on:
       - backend
 
