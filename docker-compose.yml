@@ -1,17 +1,16 @@
 version: '3.8'
 
 services:
- 
   backend:
     build: ./server
     ports:
       - "5000:5000"
     environment:
       - PORT=5000
-      - NODE_ENV=development
+      - NODE_ENV=production
       - MONGO_URI=mongodb://mongo:27017/ecoumerce
       - JWT_SECRET=5252525252525211212212214444
-      - CLIENT_URL=http://localhost:5173
+      - CLIENT_URL=http://16.171.230.83:5173
     volumes:
       - ./server/uploads:/app/uploads  
     depends_on:
@@ -22,11 +21,9 @@ services:
     ports:
       - "5173:5173"
     environment:
-      # Browser requests uploaded images from Express on the host-published port.
-      - VITE_ASSET_URL=http://localhost:5000
+      - VITE_ASSET_URL=http://16.171.230.83:5000
     depends_on:
       - backend
-
 
   mongo:
     image: mongo:latest
