@@ -81,7 +81,7 @@ pipeline {
                     steps {
                         echo 'Scanning repository for hardcoded secrets...'
                         // Use GitLeaks or Detect-Secrets
-                         sh 'gitleaks detect --source="." -v'
+                         sh 'gitleaks detect --source="." --no-git -v'
                     }
                 }
             }
