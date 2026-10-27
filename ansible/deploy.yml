@@ -1,16 +1,19 @@
 - name: Deploy MERN Stack Application
   hosts: production
   tasks:
-    - name: Ensure project directory exists on server
+    - name: Ensure project directory exists
       ansible.builtin.file:
         path: /home/ubuntu/mern-ecommerce
         state: directory
+        owner: ubuntu
+        group: ubuntu
 
-   
-    - name: Copy docker-compose file to server
-      ansible.builtin.copy:
-        src: ../docker-compose.yml  
-        dest: /home/ubuntu/mern-ecommerce/docker-compose.yml
+    - name: Clone or pull latest code from GitHub
+      ansible.builtin.git:
+        repo: 'https://github.com/USERNAME/REPOSITORY.git' # لینکی ڕەپۆزیتۆرییەکەت لێرە بنووسە
+        dest: /home/ubuntu/mern-ecommerce
+        version: main
+        force: yes
 
     - name: Pull and restart docker compose
       ansible.builtin.shell: |
