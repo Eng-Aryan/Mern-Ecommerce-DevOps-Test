@@ -1,0 +1,14 @@
+- name: Deploy MERN Stack Application
+  hosts: production
+  become: yes
+  tasks:
+    - name: Ensure project directory exists on server
+      file:
+        path: /home/ubuntu/mern-ecommerce
+        state: directory
+
+    - name: Pull and restart docker compose
+      shell: |
+        cd /home/ubuntu/mern-ecommerce
+        docker compose pull
+        docker compose up -d --build

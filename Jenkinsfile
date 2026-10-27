@@ -54,12 +54,12 @@ pipeline {
                             )
                         ]) {
                             sh '''
-                               sonar-scanner \
-                               -Dsonar.login=${SONAR_TOKEN} \
-                               -Dsonar.projectKey=mern-ecommerce \
-                               -Dsonar.projectName="MERN Ecommerce" \
-                               -Dsonar.sources=. \
-                               -Dsonar.host.url=${SONAR_HOST_URL}
+                                sonar-scanner \
+                                -Dsonar.login=${SONAR_TOKEN} \
+                                -Dsonar.projectKey=mern-ecommerce \
+                                -Dsonar.projectName="MERN Ecommerce" \
+                                -Dsonar.sources=. \
+                                -Dsonar.host.url=${SONAR_HOST_URL}
                             '''
                         }
                     }
@@ -80,8 +80,7 @@ pipeline {
                 stage('Secret Detection') {
                     steps {
                         echo 'Scanning repository for hardcoded secrets...'
-                        // Use GitLeaks or Detect-Secrets
-                         sh 'gitleaks detect --source="." --no-git -v'
+                        sh 'gitleaks detect --source="." --no-git -v'
                     }
                 }
             }
@@ -169,15 +168,18 @@ pipeline {
                 stage('Manual Approval Gate') {
                     steps {
                         input message: 'Do you approve deploying this build to production?',
-                              ok: 'Deploy to Production'
+                            ok: 'Deploy to Production'
                     }
                 }
 
                 stage('Production Deployment (Blue-Green / Canary)') {
                     steps {
-                        echo 'Deploying to Production Server...'
-                        // Use Docker Compose or Kubernetes/Swarm for deployment
-                        sh 'docker compose -f docker-compose.yml up -d --build'
+                        echo 'Deploying to Production Server via Ansible...'
+                        withCredentials([sshUserPrivateKey(credentialsId: 'aws-ec2-ssh-key', keyFileVariable: 'SSH_KEY')]) {
+                            sh '''
+                                ansible-playbook -i ansible/inventory.ini ansible/deploy.yml --private-key ${SSH_KEY}
+                            '''
+                        }
                     }
                 }
 
