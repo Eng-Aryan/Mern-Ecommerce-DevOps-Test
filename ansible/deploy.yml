@@ -24,3 +24,4 @@
         cd /home/ubuntu/mern-ecommerce
         docker compose pull || true
         docker compose up -d --build
+        

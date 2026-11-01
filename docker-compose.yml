@@ -24,6 +24,8 @@ services:
         VITE_ASSET_URL: http://16.171.230.83:5000
     ports:
       - "5173:5173"
+    environment:
+      - VITE_PROXY_TARGET=http://backend:5000
     depends_on:
       - backend
 
