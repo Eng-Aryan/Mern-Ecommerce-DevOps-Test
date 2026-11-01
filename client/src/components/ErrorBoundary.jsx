@@ -12,11 +12,8 @@ export default class ErrorBoundary extends Component {
       <div style={{ maxWidth: 640, margin: '3rem auto', padding: '0 1rem', fontFamily: 'system-ui, sans-serif' }}>
         <h1>Something went wrong</h1>
         <p>The page hit an error. Try reloading. If it keeps happening, clear saved data and reload.</p>
-        <pre style={{ background: '#fbe4e0', padding: '1rem', borderRadius: 8, whiteSpace: 'pre-wrap' }}>{String(this.state.error?.message || this.state.error)}</pre>
-        <button
-          style={{ padding: '.6rem 1.2rem', fontSize: '1rem', cursor: 'pointer' }}
-          onClick={() => { localStorage.clear(); window.location.href = '/'; }}
-        >
+        <pre style={{ background: '#fbe4e0', color: '#7d2415', padding: '1rem', borderRadius: 8, whiteSpace: 'pre-wrap' }}>{String(this.state.error?.message || this.state.error)}</pre>
+        <button style={{ padding: '.6rem 1.2rem', fontSize: '1rem', cursor: 'pointer' }} onClick={() => { localStorage.clear(); window.location.href = '/'; }}>
           Clear saved data and reload
         </button>
       </div>

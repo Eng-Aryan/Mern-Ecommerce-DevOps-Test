@@ -2,13 +2,27 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#0e3b43" />
+    <meta name="description" content="Durable gear for hiking, camping and travel." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <title>Tidewater Supply — gear for the long way round</title>
+    <script>
+      // apply the saved theme before first paint so there is no white flash in dark mode
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || (t !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches)) document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root">
-      <p style="font-family:system-ui,sans-serif;padding:2rem;color:#0e3b43">Loading Tidewater Supply…</p>
+      <p style="font-family:system-ui,sans-serif;padding:2rem;color:#0e3b43">Loading…</p>
     </div>
     <noscript>This store needs JavaScript. Please enable it in your browser.</noscript>
     <script type="module" src="/src/main.jsx"></script>

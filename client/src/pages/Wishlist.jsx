@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api, { errMsg } from '../api.js';
 import { useAuth } from '../context/AuthContext.jsx';
+import useSeo from '../hooks/useSeo.js';
 import ProductCard from '../components/ProductCard.jsx';
 import { Loader, ErrorBox } from '../components/Loader.jsx';
 
@@ -9,12 +10,9 @@ export default function Wishlist() {
   const { user } = useAuth();
   const [items, setItems] = useState(null);
   const [error, setError] = useState('');
-
+  useSeo({ title: 'Wishlist' });
   useEffect(() => { api.get('/wishlist').then((r) => setItems(r.data)).catch((e) => setError(errMsg(e))); }, []);
-
-  // hide items the moment they're un-hearted
   const visible = items?.filter((p) => user.wishlist.includes(p._id));
-
   return (
     <div className="container section">
       <h1>Wishlist</h1>
