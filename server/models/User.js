@@ -1,6 +1,15 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
+const addressFields = {
+  fullName: String,
+  phone: String,
+  address: String,
+  city: String,
+  postalCode: String,
+  country: String,
+};
+
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: [true, 'Name is required'], trim: true },
@@ -12,17 +21,16 @@ const userSchema = new mongoose.Schema(
       trim: true,
       match: [/^\S+@\S+\.\S+$/, 'Enter a valid email address'],
     },
+    phone: { type: String, default: '', trim: true },
     password: { type: String, required: true, minlength: [6, 'Password must be at least 6 characters'], select: false },
     isAdmin: { type: Boolean, default: false },
+    isBlocked: { type: Boolean, default: false },
     wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }],
-    shippingAddress: {
-      fullName: String,
-      phone: String,
-      address: String,
-      city: String,
-      postalCode: String,
-      country: String,
-    },
+    shippingAddress: addressFields, // mirrors the default saved address
+    addresses: [{ label: { type: String, default: 'Home' }, isDefault: { type: Boolean, default: false }, ...addressFields }],
+    resetToken: { type: String, select: false },
+    resetExpires: { type: Date, select: false },
+    lastLoginAt: Date,
   },
   { timestamps: true }
 );
