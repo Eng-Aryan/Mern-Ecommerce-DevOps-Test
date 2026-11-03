@@ -140,6 +140,7 @@ pipeline {
                 stage('Staging Deployment') {
                     steps {
                         echo 'Deploying containers to Staging Environment...'
+                        sh 'docker compose down'
                         sh 'docker compose up -d'
                     }
                 }
