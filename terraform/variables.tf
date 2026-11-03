@@ -1,9 +1,11 @@
 variable "aws_region" {
-  type    = string
-  default = "eu-north-1"
+  default = "eu-north-1" 
 }
 
-variable "environment" {
-  type    = string
-  default = "local"
+variable "instance_type" {
+  default = "t3.micro"
+}
+
+variable "instance_name" {
+  default = "MERN-Tidewater-Server"
 }

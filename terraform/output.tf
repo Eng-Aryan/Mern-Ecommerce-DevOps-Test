@@ -1,9 +1,9 @@
-output "vpc_id" {
-  value       = aws_vpc.mern_vpc.id
-  description = "The ID of the VPC"
+output "instance_public_ip" {
+  description = "Public IP address of the EC2 instance"
+  value       = aws_instance.mern_server.public_ip
 }
 
-output "s3_bucket_name" {
-  value       = aws_s3_bucket.mern_storage.id
-  description = "The name of the S3 bucket"
+output "ssh_connection_string" {
+  description = "Command to connect via SSH"
+  value       = "ssh -i 'your-key-name.pem' ubuntu@${aws_instance.mern_server.public_ip}"
 }
