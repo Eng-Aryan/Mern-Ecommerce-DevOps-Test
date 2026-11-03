@@ -63,7 +63,7 @@ services:
       dockerfile: Dockerfile.prometheus
     restart: unless-stopped
     ports:
-      - "9090:9090"
+      - "9091:9090"
     volumes:
       - prometheus_data:/prometheus
 
