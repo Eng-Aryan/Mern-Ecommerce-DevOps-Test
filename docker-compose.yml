@@ -15,6 +15,7 @@ services:
       - ./server/uploads:/app/uploads  
     depends_on:
       - mongo
+    restart: unless-stopped
 
   frontend:
     build:
@@ -28,6 +29,7 @@ services:
       - VITE_PROXY_TARGET=http://backend:5000
     depends_on:
       - backend
+    restart: unless-stopped
 
   mongo:
     image: mongo:latest
@@ -35,6 +37,55 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    restart: unless-stopped
+
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - uptimekuma_data:/app/data
+
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+
+ 
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
 
 volumes:
   mongo-data:
+  uptimekuma_data:
+  prometheus_data:
+  grafana_data:
