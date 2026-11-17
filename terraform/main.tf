@@ -1,4 +1,4 @@
-# 
+# i will update this folder terraform becouse of have problem this file create for local host not for the aws server for reminder
 resource "aws_security_group" "mern_sg" {
   name        = "mern-ec2-security-group"
   description = "Allow required ports for MERN stack and monitoring"
